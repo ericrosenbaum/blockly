@@ -26,11 +26,34 @@
 </head>
 <body>
 
+  <div id="blocklyDiv" style="height: 480px; width: 1000px;"></div>
+
   <p>
-    <button onclick="runCode()">Run</button>
+    <button style="height:50px;width:200px" onclick="runCode()">Run</button>
   </p>
 
-  <div id="blocklyDiv" style="height: 480px; width: 600px;"></div>
+  <p>
+    <button onclick="loadDemo('simpleDemo')">simple demo</button>
+    <button onclick="loadDemo('variableDemo')">variable demo</button>
+    <button onclick="loadDemo('functionDemo')">function demo</button>
+    <button onclick="loadDemo('doubleUpDemo')">double it up, yo</button>
+  </p>
+
+  <xml id="simpleDemo" style="display: none">
+    <block type="controls_repeat_ext" id="30" x="127" y="8"><value name="TIMES"><block type="math_number" id="31"><field name="NUM">2</field></block></value><statement name="DO"><block type="synth_play_note" id="32"><value name="pitch"><block type="math_number" id="33"><field name="NUM">200</field></block></value><value name="duration"><block type="math_number" id="41"><field name="NUM">0.5</field></block></value><next><block type="synth_play_note" id="34"><value name="pitch"><block type="math_number" id="35"><field name="NUM">300</field></block></value><value name="duration"><block type="math_number" id="42"><field name="NUM">0.5</field></block></value><next><block type="synth_play_note" id="36"><value name="pitch"><block type="math_number" id="37"><field name="NUM">400</field></block></value><value name="duration"><block type="math_number" id="43"><field name="NUM">0.5</field></block></value></block></next></block></next></block></statement></block>
+  </xml>
+
+  <xml id="variableDemo" style="display: none">
+    <block type="variables_set" id="48" x="120" y="20"><field name="VAR">frequency</field><value name="VALUE"><block type="math_number" id="49"><field name="NUM">200</field></block></value><next><block type="controls_repeat_ext" id="50"><value name="TIMES"><block type="math_number" id="51"><field name="NUM">8</field></block></value><statement name="DO"><block type="synth_play_note" id="52"><value name="pitch"><block type="variables_get" id="53"><field name="VAR">frequency</field></block></value><value name="duration"><block type="math_number" id="61"><field name="NUM">0.25</field></block></value><next><block type="variables_set" id="54"><field name="VAR">frequency</field><value name="VALUE"><block type="math_arithmetic" id="55"><field name="OP">ADD</field><value name="A"><block type="variables_get" id="56"><field name="VAR">frequency</field></block></value><value name="B"><block type="math_number" id="57"><field name="NUM">200</field></block></value></block></value></block></next></block></statement></block></next></block>
+  </xml>
+
+  <xml id="functionDemo" style="display: none">
+    <block type="variables_set" id="30" x="150" y="30"><field name="VAR">counter</field><value name="VALUE"><block type="math_number" id="31"><field name="NUM">2</field></block></value><next><block type="controls_repeat_ext" id="32"><value name="TIMES"><block type="math_number" id="33"><field name="NUM">7</field></block></value><statement name="DO"><block type="procedures_callnoreturn" id="34"><mutation name="up"><arg name="times"></arg></mutation><value name="ARG0"><block type="variables_get" id="35"><field name="VAR">counter</field></block></value><next><block type="variables_set" id="36"><field name="VAR">counter</field><value name="VALUE"><block type="math_arithmetic" id="37"><field name="OP">ADD</field><value name="A"><block type="variables_get" id="38"><field name="VAR">counter</field></block></value><value name="B"><block type="math_number" id="39"><field name="NUM">1</field></block></value></block></value></block></next></block></statement></block></next></block><block type="procedures_defnoreturn" id="40" x="150" y="230"><mutation><arg name="times"></arg></mutation><field name="NAME">up</field><statement name="STACK"><block type="variables_set" id="41"><field name="VAR">frequency</field><value name="VALUE"><block type="math_number" id="42"><field name="NUM">200</field></block></value><next><block type="controls_repeat_ext" id="43"><value name="TIMES"><block type="variables_get" id="44"><field name="VAR">times</field></block></value><statement name="DO"><block type="synth_play_note" id="45"><value name="pitch"><block type="variables_get" id="46"><field name="VAR">frequency</field></block></value><value name="duration"><block type="math_number" id="58"><field name="NUM">0.15</field></block></value><next><block type="variables_set" id="47"><field name="VAR">frequency</field><value name="VALUE"><block type="math_arithmetic" id="48"><field name="OP">ADD</field><value name="A"><block type="variables_get" id="49"><field name="VAR">frequency</field></block></value><value name="B"><block type="math_number" id="50"><field name="NUM">200</field></block></value></block></value></block></next></block></statement></block></next></block></statement></block>
+  </xml>
+
+  <xml id="doubleUpDemo" style="display: none">
+    <block type="synth_play_note" id="30" x="161" y="30"><value name="pitch"><block type="math_number" id="31"><field name="NUM">400</field></block></value><value name="duration"><block type="math_number" id="32"><field name="NUM">0.25</field></block></value><next><block type="synth_play_note" id="33"><value name="pitch"><block type="math_number" id="34"><field name="NUM">350</field></block></value><value name="duration"><block type="math_number" id="35"><field name="NUM">0.25</field></block></value><next><block type="synth_play_note" id="36"><value name="pitch"><block type="math_number" id="37"><field name="NUM">300</field></block></value><value name="duration"><block type="math_number" id="38"><field name="NUM">0.25</field></block></value><next><block type="synth_play_note" id="39"><value name="pitch"><block type="math_number" id="40"><field name="NUM">200</field></block></value><value name="duration"><block type="math_number" id="41"><field name="NUM">0.25</field></block></value><next><block type="variables_set" id="1"><field name="VAR">counter</field><value name="VALUE"><block type="math_number" id="2"><field name="NUM">1</field></block></value><next><block type="controls_repeat_ext" id="3"><value name="TIMES"><block type="math_number" id="4"><field name="NUM">4</field></block></value><statement name="DO"><block type="controls_repeat_ext" id="5"><value name="TIMES"><block type="variables_get" id="6"><field name="VAR">counter</field></block></value><statement name="DO"><block type="synth_play_note" id="7"><value name="pitch"><block type="math_arithmetic" id="8"><field name="OP">DIVIDE</field><value name="A"><block type="math_number" id="9"><field name="NUM">400</field></block></value><value name="B"><block type="variables_get" id="10"><field name="VAR">counter</field></block></value></block></value><value name="duration"><block type="math_arithmetic" id="11"><field name="OP">DIVIDE</field><value name="A"><block type="math_number" id="12"><field name="NUM">1</field></block></value><value name="B"><block type="variables_get" id="13"><field name="VAR">counter</field></block></value></block></value></block></statement><next><block type="variables_set" id="14"><field name="VAR">counter</field><value name="VALUE"><block type="math_arithmetic" id="15"><field name="OP">MULTIPLY</field><value name="A"><block type="variables_get" id="16"><field name="VAR">counter</field></block></value><value name="B"><block type="math_number" id="17"><field name="NUM">2</field></block></value></block></value></block></next></block></statement></block></next></block></next></block></next></block></next></block></next></block>
+  </xml>
 
   <xml id="toolbox" style="display: none">
     <category name="Sound">
@@ -40,7 +63,13 @@
             <field name="NUM">200</field>
           </block>
         </value>
+        <value name="duration">
+          <block type="math_number">
+            <field name="NUM">0.5</field>
+          </block>
+        </value>
       </block>
+      <block type="synth_voice"></block>
     </category>
     <category name="Logic">
       <block type="controls_if"></block>
@@ -78,121 +107,138 @@
     <category name="Functions" custom="PROCEDURE"></category>
   </xml>
 
-<xml id="startBlocks" style="display: none">
-
- <block type="controls_repeat_ext" id="10" x="27" y="8"><value name="TIMES"><block type="math_number" id="11"><field name="NUM">4</field></block></value><statement name="DO"><block type="synth_play_note" id="1"><value name="pitch"><block type="math_number" id="2"><field name="NUM">200</field></block></value><next><block type="synth_play_note" id="3"><value name="pitch"><block type="math_number" id="4"><field name="NUM">300</field></block></value><next><block type="synth_play_note" id="5"><value name="pitch"><block type="math_number" id="6"><field name="NUM">400</field></block></value></block></next></block></next></block></statement></block></xml>
-  
-
   <script>
 
     // TONE SETUP
-    var synth = new Tone.PolySynth(8, Tone.MonoSynth).toMaster();
+    // var synth = new Tone.PolySynth(16, Tone.MonoSynth).toMaster();
     // synth.triggerAttackRelease([200,300,500], 0.5); // test sound
+
+  /*
+  var synth = new Tone.PolySynth(16, Tone.MonoSynth).toMaster();
+  synth.set({
+    oscillator:{
+      type: "sine"
+    },
+    envelope:{
+      attack: 0.05
+    }
+  });
+*/
+
+    var synth = new Tone.PolySynth(16, Tone.SimpleSynth).toMaster();
+    synth.set({
+      oscillator: {
+        type:'pwm',
+        modulationFrequency: 1
+      }
+    });
 
     // BLOCKLY SETUP
     var workspace = Blockly.inject('blocklyDiv',
-        {media: '../../media/',
-         toolbox: document.getElementById('toolbox'),
-         trashcan: false
+        {
+          media: '../../media/',
+          toolbox: document.getElementById('toolbox'),
+          scrollbars:false,
+          trashcan: false
        });
     Blockly.Xml.domToWorkspace(workspace,
-        document.getElementById('startBlocks'));
+        document.getElementById('simpleDemo'));
+
+    function loadDemo(name) {
+      workspace.clear();
+      Blockly.Xml.domToWorkspace(workspace, document.getElementById(name));
+    }
+
 
     var myInterpreter = null;
 
-    var interpreterStepping = true;
-
     function initApi(interpreter, scope) {
-      // // ericr adding synth blocks...
-      var wrapper = function(freq) {
-        freq = freq ? Number(freq) : '440';
-        return interpreter.createPrimitive(playNote(freq));
+
+      // playNote
+      var wrapper = function(freq, duration, blockId) {
+        freq = (Number(freq) > 0) ? Number(freq) : 200;
+        duration = (Number(duration) > 0) ? Number(duration) : 0.5;
+        blockId = blockId ? Number(blockId) : '0';
+        return interpreter.createPrimitive(playNote(freq, duration, blockId));
       };
       interpreter.setProperty(scope, 'playNote',
           interpreter.createNativeFunction(wrapper));
 
-      // Add an API function for the alert() block.
-      var wrapper = function(text) {
-        text = text ? text.toString() : '';
-        return interpreter.createPrimitive(alert(text));
+      // setTime - used internally
+      var wrapper = function(time) {
+        time = Number(time) ? Number(time) : 0;
+        return interpreter.createPrimitive(setTime(time));
       };
-      interpreter.setProperty(scope, 'alert',
+      interpreter.setProperty(scope, 'setTime',
           interpreter.createNativeFunction(wrapper));
 
-      // Add an API function for the prompt() block.
-      var wrapper = function(text) {
-        text = text ? text.toString() : '';
-        return interpreter.createPrimitive(prompt(text));
+    }
+
+    // TIMING!
+    // the strategy is to pre-schedule all synth events for precise timing
+    // scheduled block highlighting simulates stepping during playback, 
+    // even though all the code runs in advance (only synth event blocks are highlighted)
+    //
+    // the assembled js code contains function calls for each synth event which include block ids
+    // running the code in the interpreter results in populating a list of synth events
+    // this list includes computed schedule times and block ids
+    // finally, the events are scheduled: 
+    // synth events are scheduled using tonejs i.e. web audio for very precise timing
+    // block highlighting is scheduled with timeouts, not as precise but good enough
+
+    var nextTime;
+    var noteEvents = [];
+    var secondsPerBeat = 0.5;
+      
+    function playNote(freq, duration, blockId) {
+      var time = nextTime;
+      nextTime += duration;
+      var newNoteEvent = {
+        freq: freq,
+        duration: duration,
+        time: time,
+        blockId: blockId
       };
-      interpreter.setProperty(scope, 'prompt',
-          interpreter.createNativeFunction(wrapper));
-
-      // Add an API function for highlighting blocks.
-      var wrapper = function(id) {
-        id = id ? id.toString() : '';
-        return interpreter.createPrimitive(highlightBlock(id));
-      };
-      interpreter.setProperty(scope, 'highlightBlock',
-          interpreter.createNativeFunction(wrapper));
+      noteEvents.push(newNoteEvent);
     }
 
-    function playNote(freq) {
-      synth.triggerAttackRelease(freq, 0.5);
+    function setTime(time) {
+      nextTime = time;
     }
 
-    var highlightPause = false;
-
-    function highlightBlock(id) {
-      workspace.highlightBlock(id);
-      highlightPause = true;
+    function scheduleNotes() {
+      for (var i=0; i<noteEvents.length; i++) {
+        synth.triggerAttackRelease(noteEvents[i].freq, noteEvents[i].duration, '+' + noteEvents[i].time);
+        highlightBlock(noteEvents[i].blockId, noteEvents[i].time);
+      }
     }
+
+    function highlightBlock(id, time) {
+      window.setTimeout(function() {
+        workspace.highlightBlock(id);
+      }, time*1000);
+    } 
 
     function parseCode() {
-      // Generate JavaScript code and parse it.
-      Blockly.JavaScript.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
-      Blockly.JavaScript.addReservedWords('highlightBlock');
       var code = Blockly.JavaScript.workspaceToCode(workspace);
       myInterpreter = new Interpreter(code, initApi);
-
-      // alert('Ready to execute this code:\n\n' + code);
-      // document.getElementById('stepButton').disabled = '';
-      highlightPause = false;
-      workspace.traceOn(true);
-      workspace.highlightBlock(null);
-    }
-
-    function stepCode(time) {
-      try {
-        var ok = myInterpreter.step();
-      } finally {
-        if (!ok) {
-          // Program complete, no more code to execute.
-          interpreterStepping = false;
-          workspace.highlightBlock(null);
-          return;
-        }
-      }
-      if (highlightPause) {
-        // A block has been highlighted.  Pause execution here.
-        highlightPause = false;
-      } else {
-        // Keep executing until a highlight statement is reached.
-        stepCode();
-      }
     }
 
     function runCode() {
-      parseCode();
-      interpreterStepping = true;
-    }
+      
+      noteEvents = [];
+      nextTime = 0;
 
-    Tone.Transport.setInterval(function(time){
-      if (interpreterStepping) {
-        stepCode(time);
-      }
-    }, '8n');
-    Tone.Transport.start();
-    Tone.Transport.loop = true;
+      workspace.traceOn(true);
+      workspace.highlightBlock(null);
+
+      parseCode();
+      myInterpreter.run(); // generate the schedule
+      scheduleNotes();
+
+      highlightBlock(null, nextTime); // remove highlight at end of final event
+
+    }
 
   </script>
 
