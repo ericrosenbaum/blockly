@@ -131,7 +131,7 @@
   });
 */
 
-    var synth = new Tone.PolySynth(16, Tone.SimpleSynth).toMaster();
+    var synth = new Tone.PolySynth(64, Tone.SimpleSynth).toMaster();
     synth.set({
       oscillator: {
         type:'pwm',
@@ -233,7 +233,7 @@
       }, timeOff*1000);
     } 
 
-    function parseCode() {
+    function generateCode() {
       Blockly.JavaScript.init(workspace);
 
       // before each stack, reset the time
@@ -249,7 +249,8 @@
       // prepend variable and function definitions
       code = Blockly.JavaScript.finish(code);
 
-      myInterpreter = new Interpreter(code, initApi);
+      return code;
+
     }
 
     function runCode() {
@@ -260,8 +261,11 @@
       workspace.traceOn(true);
       workspace.highlightBlock(null);
 
-      parseCode();
+      code = generateCode();
+
+      myInterpreter = new Interpreter(code, initApi);
       myInterpreter.run(); // generate the schedule
+
       scheduleNotes();
     }
 
