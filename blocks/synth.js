@@ -1,3 +1,6 @@
+Blockly.Blocks.synth = {};
+Blockly.Blocks.synth.HUE = 290;
+
 Blockly.Blocks['synth_play_note'] = {
   init: function() {
     this.appendValueInput("pitch")
@@ -11,7 +14,7 @@ Blockly.Blocks['synth_play_note'] = {
     this.setInputsInline(true);
     this.setPreviousStatement(true);
     this.setNextStatement(true);
-    this.setColour(290);
+    this.setColour(Blockly.Blocks.synth.HUE);
     this.setTooltip('');
     this.setHelpUrl('');
   }
@@ -22,7 +25,7 @@ Blockly.Blocks['synth_voice'] = {
     this.appendStatementInput("VOICE")
         .setCheck(null)
         .appendField("start voice");
-    this.setColour(230);
+    this.setColour(Blockly.Blocks.synth.HUE);
     this.setTooltip('');
     this.setHelpUrl('http://www.example.com/');
   }
