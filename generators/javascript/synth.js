@@ -1,3 +1,16 @@
+Blockly.JavaScript['synth_play_freq'] = function(block) {
+
+	var value_freq = Blockly.JavaScript.valueToCode(block, 'freq', Blockly.JavaScript.ORDER_ATOMIC);
+	var value_duration = Blockly.JavaScript.valueToCode(block, 'duration', Blockly.JavaScript.ORDER_ATOMIC);
+
+	value_freq = value_freq ? value_freq : 'null';
+	value_duration = value_duration ? value_duration : 'null';
+
+	code = 'playFreq(' + value_freq + ', ' + value_duration + ', ' + block.id + ');\n';
+
+	return code;
+}
+
 Blockly.JavaScript['synth_play_note'] = function(block) {
 
 	var value_pitch = Blockly.JavaScript.valueToCode(block, 'pitch', Blockly.JavaScript.ORDER_ATOMIC);
@@ -11,12 +24,37 @@ Blockly.JavaScript['synth_play_note'] = function(block) {
 	return code;
 }
 
+
+Blockly.JavaScript['synth_rest'] = function(block) {
+
+	var value_duration = Blockly.JavaScript.valueToCode(block, 'duration', Blockly.JavaScript.ORDER_ATOMIC);
+
+	value_duration = value_duration ? value_duration : 'null';
+
+	code = 'rest(' + value_duration + ', ' + block.id + ');\n';
+
+	return code;
+}
+
+
+Blockly.JavaScript['synth_play_drum'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var value_duration = Blockly.JavaScript.valueToCode(block, 'duration', Blockly.JavaScript.ORDER_ATOMIC);
+
+  value_duration = value_duration ? value_duration : 'null';
+  
+  var code = 'playDrum(\'' + dropdown_name + '\', ' + value_duration + ', ' + block.id + ');\n';
+  
+  return code;
+};
+/*
 Blockly.JavaScript['synth_voice'] = function(block) {
   var statements_voice = Blockly.JavaScript.statementToCode(block, 'VOICE');
   var code = 'setTime(0);\n';
   code += statements_voice;
   return code;
 };
+*/
 
 /*
 Blockly.JavaScript['synth_every_bar'] = function(block) {

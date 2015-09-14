@@ -27,7 +27,7 @@
 </head>
 <body>
 
-  <div id="blocklyDiv" style="height: 480px; width: 1000px;"></div>
+  <div id="blocklyDiv" style="height: 600px; width: 1000px;"></div>
 
   <p>
     <button style="height:50px;width:200px" onclick="runCode()">Run</button>
@@ -37,45 +37,88 @@
     <button onclick="loadDemo('simpleDemo')">simple demo</button>
     <button onclick="loadDemo('variableDemo')">variable demo</button>
     <button onclick="loadDemo('functionDemo')">function demo</button>
-    <button onclick="loadDemo('doubleUpDemo')">double it up, yo</button>
     <button onclick="loadDemo('multivoiceDemo')">multiple voices</button>
+    <button onclick="loadDemo('comboDemo')">combo demo</button>
+    <button onclick="loadDemo('doubleUpDrumsDemo')">double it up, yo</button>
   </p>
 
   <xml id="simpleDemo" style="display: none">
-    <block type="controls_repeat_ext" id="30" x="127" y="8"><value name="TIMES"><block type="math_number" id="31"><field name="NUM">2</field></block></value><statement name="DO"><block type="synth_play_note" id="32"><value name="pitch"><block type="math_number" id="33"><field name="NUM">200</field></block></value><value name="duration"><block type="math_number" id="41"><field name="NUM">0.5</field></block></value><next><block type="synth_play_note" id="34"><value name="pitch"><block type="math_number" id="35"><field name="NUM">300</field></block></value><value name="duration"><block type="math_number" id="42"><field name="NUM">0.5</field></block></value><next><block type="synth_play_note" id="36"><value name="pitch"><block type="math_number" id="37"><field name="NUM">400</field></block></value><value name="duration"><block type="math_number" id="43"><field name="NUM">0.5</field></block></value></block></next></block></next></block></statement></block>
+    <block type="controls_repeat_ext" id="46" x="127" y="8"><value name="TIMES"><block type="math_number" id="47"><field name="NUM">2</field></block></value><statement name="DO"><block type="synth_play_note" id="48"><value name="pitch"><block type="math_number" id="49"><field name="NUM">60</field></block></value><value name="duration"><block type="math_number" id="50"><field name="NUM">2</field></block></value><next><block type="synth_play_note" id="51"><value name="pitch"><block type="math_number" id="52"><field name="NUM">64</field></block></value><value name="duration"><block type="math_number" id="53"><field name="NUM">2</field></block></value><next><block type="synth_play_note" id="54"><value name="pitch"><block type="math_number" id="55"><field name="NUM">67</field></block></value><value name="duration"><block type="math_number" id="56"><field name="NUM">2</field></block></value><next><block type="synth_play_note" id="57"><value name="pitch"><block type="math_number" id="58"><field name="NUM">71</field></block></value><value name="duration"><block type="math_number" id="59"><field name="NUM">2</field></block></value></block></next></block></next></block></next></block></statement><next><block type="synth_play_note" id="60"><value name="pitch"><block type="math_number" id="61"><field name="NUM">72</field></block></value><value name="duration"><block type="math_number" id="62"><field name="NUM">4</field></block></value></block></next></block>
   </xml>
 
   <xml id="variableDemo" style="display: none">
-    <block type="variables_set" id="48" x="120" y="20"><field name="VAR">frequency</field><value name="VALUE"><block type="math_number" id="49"><field name="NUM">200</field></block></value><next><block type="controls_repeat_ext" id="50"><value name="TIMES"><block type="math_number" id="51"><field name="NUM">8</field></block></value><statement name="DO"><block type="synth_play_note" id="52"><value name="pitch"><block type="variables_get" id="53"><field name="VAR">frequency</field></block></value><value name="duration"><block type="math_number" id="61"><field name="NUM">0.25</field></block></value><next><block type="variables_set" id="54"><field name="VAR">frequency</field><value name="VALUE"><block type="math_arithmetic" id="55"><field name="OP">ADD</field><value name="A"><block type="variables_get" id="56"><field name="VAR">frequency</field></block></value><value name="B"><block type="math_number" id="57"><field name="NUM">200</field></block></value></block></value></block></next></block></statement></block></next></block>
+    <block type="variables_set" id="63" x="120" y="20"><field name="VAR">frequency</field><value name="VALUE"><block type="math_number" id="64"><field name="NUM">50</field></block></value><next><block type="controls_repeat_ext" id="65"><value name="TIMES"><block type="math_number" id="66"><field name="NUM">24</field></block></value><statement name="DO"><block type="synth_play_freq" id="67"><value name="freq"><block type="variables_get" id="68"><field name="VAR">frequency</field></block></value><value name="duration"><block type="math_number" id="69"><field name="NUM">1</field></block></value><next><block type="variables_set" id="70"><field name="VAR">frequency</field><value name="VALUE"><block type="math_arithmetic" id="71"><field name="OP">ADD</field><value name="A"><block type="variables_get" id="72"><field name="VAR">frequency</field></block></value><value name="B"><block type="math_number" id="73"><field name="NUM">50</field></block></value></block></value></block></next></block></statement></block></next></block>
   </xml>
 
   <xml id="functionDemo" style="display: none">
-    <block type="variables_set" id="30" x="150" y="30"><field name="VAR">counter</field><value name="VALUE"><block type="math_number" id="31"><field name="NUM">2</field></block></value><next><block type="controls_repeat_ext" id="32"><value name="TIMES"><block type="math_number" id="33"><field name="NUM">7</field></block></value><statement name="DO"><block type="procedures_callnoreturn" id="34"><mutation name="up"><arg name="times"></arg></mutation><value name="ARG0"><block type="variables_get" id="35"><field name="VAR">counter</field></block></value><next><block type="variables_set" id="36"><field name="VAR">counter</field><value name="VALUE"><block type="math_arithmetic" id="37"><field name="OP">ADD</field><value name="A"><block type="variables_get" id="38"><field name="VAR">counter</field></block></value><value name="B"><block type="math_number" id="39"><field name="NUM">1</field></block></value></block></value></block></next></block></statement></block></next></block><block type="procedures_defnoreturn" id="40" x="150" y="230"><mutation><arg name="times"></arg></mutation><field name="NAME">up</field><statement name="STACK"><block type="variables_set" id="41"><field name="VAR">frequency</field><value name="VALUE"><block type="math_number" id="42"><field name="NUM">200</field></block></value><next><block type="controls_repeat_ext" id="43"><value name="TIMES"><block type="variables_get" id="44"><field name="VAR">times</field></block></value><statement name="DO"><block type="synth_play_note" id="45"><value name="pitch"><block type="variables_get" id="46"><field name="VAR">frequency</field></block></value><value name="duration"><block type="math_number" id="58"><field name="NUM">0.15</field></block></value><next><block type="variables_set" id="47"><field name="VAR">frequency</field><value name="VALUE"><block type="math_arithmetic" id="48"><field name="OP">ADD</field><value name="A"><block type="variables_get" id="49"><field name="VAR">frequency</field></block></value><value name="B"><block type="math_number" id="50"><field name="NUM">200</field></block></value></block></value></block></next></block></statement></block></next></block></statement></block>
+    <block type="variables_set" id="74" x="150" y="30"><field name="VAR">counter</field><value name="VALUE"><block type="math_number" id="75"><field name="NUM">2</field></block></value><next><block type="controls_repeat_ext" id="76"><value name="TIMES"><block type="math_number" id="77"><field name="NUM">6</field></block></value><statement name="DO"><block type="procedures_callnoreturn" id="78"><mutation name="up"><arg name="times"></arg></mutation><value name="ARG0"><block type="variables_get" id="79"><field name="VAR">counter</field></block></value><next><block type="variables_set" id="80"><field name="VAR">counter</field><value name="VALUE"><block type="math_arithmetic" id="81"><field name="OP">ADD</field><value name="A"><block type="variables_get" id="82"><field name="VAR">counter</field></block></value><value name="B"><block type="math_number" id="83"><field name="NUM">1</field></block></value></block></value></block></next></block></statement></block></next></block><block type="procedures_defnoreturn" id="84" x="157" y="215"><mutation><arg name="times"></arg></mutation><field name="NAME">up</field><statement name="STACK"><block type="variables_set" id="85"><field name="VAR">note</field><value name="VALUE"><block type="math_number" id="86"><field name="NUM">72</field></block></value><next><block type="controls_repeat_ext" id="87"><value name="TIMES"><block type="variables_get" id="88"><field name="VAR">times</field></block></value><statement name="DO"><block type="synth_play_note" id="89"><value name="pitch"><block type="variables_get" id="90"><field name="VAR">note</field></block></value><value name="duration"><block type="math_number" id="91"><field name="NUM">1</field></block></value><next><block type="variables_set" id="92"><field name="VAR">note</field><value name="VALUE"><block type="math_arithmetic" id="93"><field name="OP">MINUS</field><value name="A"><block type="variables_get" id="94"><field name="VAR">note</field></block></value><value name="B"><block type="math_number" id="95"><field name="NUM">2</field></block></value></block></value></block></next></block></statement></block></next></block></statement></block>
   </xml>
 
   <xml id="doubleUpDemo" style="display: none">
-    <block type="synth_play_note" id="30" x="161" y="30"><value name="pitch"><block type="math_number" id="31"><field name="NUM">400</field></block></value><value name="duration"><block type="math_number" id="32"><field name="NUM">0.25</field></block></value><next><block type="synth_play_note" id="33"><value name="pitch"><block type="math_number" id="34"><field name="NUM">350</field></block></value><value name="duration"><block type="math_number" id="35"><field name="NUM">0.25</field></block></value><next><block type="synth_play_note" id="36"><value name="pitch"><block type="math_number" id="37"><field name="NUM">300</field></block></value><value name="duration"><block type="math_number" id="38"><field name="NUM">0.25</field></block></value><next><block type="synth_play_note" id="39"><value name="pitch"><block type="math_number" id="40"><field name="NUM">200</field></block></value><value name="duration"><block type="math_number" id="41"><field name="NUM">0.25</field></block></value><next><block type="variables_set" id="1"><field name="VAR">counter</field><value name="VALUE"><block type="math_number" id="2"><field name="NUM">1</field></block></value><next><block type="controls_repeat_ext" id="3"><value name="TIMES"><block type="math_number" id="4"><field name="NUM">4</field></block></value><statement name="DO"><block type="controls_repeat_ext" id="5"><value name="TIMES"><block type="variables_get" id="6"><field name="VAR">counter</field></block></value><statement name="DO"><block type="synth_play_note" id="7"><value name="pitch"><block type="math_arithmetic" id="8"><field name="OP">DIVIDE</field><value name="A"><block type="math_number" id="9"><field name="NUM">400</field></block></value><value name="B"><block type="variables_get" id="10"><field name="VAR">counter</field></block></value></block></value><value name="duration"><block type="math_arithmetic" id="11"><field name="OP">DIVIDE</field><value name="A"><block type="math_number" id="12"><field name="NUM">1</field></block></value><value name="B"><block type="variables_get" id="13"><field name="VAR">counter</field></block></value></block></value></block></statement><next><block type="variables_set" id="14"><field name="VAR">counter</field><value name="VALUE"><block type="math_arithmetic" id="15"><field name="OP">MULTIPLY</field><value name="A"><block type="variables_get" id="16"><field name="VAR">counter</field></block></value><value name="B"><block type="math_number" id="17"><field name="NUM">2</field></block></value></block></value></block></next></block></statement></block></next></block></next></block></next></block></next></block></next></block>
+    <block type="synth_play_note" id="130" x="161" y="30"><value name="pitch"><block type="math_number" id="131"><field name="NUM">72</field></block></value><value name="duration"><block type="math_number" id="132"><field name="NUM">2</field></block></value><next><block type="synth_play_note" id="133"><value name="pitch"><block type="math_number" id="134"><field name="NUM">67</field></block></value><value name="duration"><block type="math_number" id="135"><field name="NUM">2</field></block></value><next><block type="synth_play_note" id="136"><value name="pitch"><block type="math_number" id="137"><field name="NUM">63</field></block></value><value name="duration"><block type="math_number" id="138"><field name="NUM">2</field></block></value><next><block type="synth_play_note" id="139"><value name="pitch"><block type="math_number" id="140"><field name="NUM">62</field></block></value><value name="duration"><block type="math_number" id="141"><field name="NUM">2</field></block></value><next><block type="variables_set" id="142"><field name="VAR">counter</field><value name="VALUE"><block type="math_number" id="143"><field name="NUM">1</field></block></value><next><block type="controls_repeat_ext" id="144"><value name="TIMES"><block type="math_number" id="145"><field name="NUM">4</field></block></value><statement name="DO"><block type="controls_repeat_ext" id="146"><value name="TIMES"><block type="variables_get" id="147"><field name="VAR">counter</field></block></value><statement name="DO"><block type="synth_play_note" id="148"><value name="pitch"><block type="math_arithmetic" id="149"><field name="OP">MINUS</field><value name="A"><block type="math_number" id="150"><field name="NUM">61</field></block></value><value name="B"><block type="variables_get" id="151"><field name="VAR">counter</field></block></value></block></value><value name="duration"><block type="math_arithmetic" id="152"><field name="OP">DIVIDE</field><value name="A"><block type="math_number" id="153"><field name="NUM">8</field></block></value><value name="B"><block type="variables_get" id="154"><field name="VAR">counter</field></block></value></block></value></block></statement><next><block type="variables_set" id="155"><field name="VAR">counter</field><value name="VALUE"><block type="math_arithmetic" id="156"><field name="OP">MULTIPLY</field><value name="A"><block type="variables_get" id="157"><field name="VAR">counter</field></block></value><value name="B"><block type="math_number" id="158"><field name="NUM">2</field></block></value></block></value></block></next></block></statement></block></next></block></next></block></next></block></next></block></next></block>
   </xml>
 
   <xml id="multivoiceDemo" style="display: none">
-    <block type="controls_repeat_ext" id="51" x="148" y="34"><value name="TIMES"><block type="math_number" id="52"><field name="NUM">2</field></block></value><statement name="DO"><block type="synth_play_note" id="13"><value name="pitch"><block type="math_number" id="14"><field name="NUM">100</field></block></value><value name="duration"><block type="math_number" id="15"><field name="NUM">0.5</field></block></value><next><block type="synth_play_note" id="16"><value name="pitch"><block type="math_number" id="17"><field name="NUM">200</field></block></value><value name="duration"><block type="math_number" id="18"><field name="NUM">0.5</field></block></value><next><block type="synth_play_note" id="19"><value name="pitch"><block type="math_number" id="20"><field name="NUM">150</field></block></value><value name="duration"><block type="math_number" id="21"><field name="NUM">0.5</field></block></value><next><block type="synth_play_note" id="22"><value name="pitch"><block type="math_number" id="23"><field name="NUM">300</field></block></value><value name="duration"><block type="math_number" id="24"><field name="NUM">0.5</field></block></value></block></next></block></next></block></next></block></statement><next><block type="synth_play_note" id="62"><value name="pitch"><block type="math_number" id="63"><field name="NUM">100</field></block></value><value name="duration"><block type="math_number" id="64"><field name="NUM">0.5</field></block></value></block></next></block><block type="controls_repeat_ext" id="56" x="508" y="28"><value name="TIMES"><block type="math_number" id="57"><field name="NUM">4</field></block></value><statement name="DO"><block type="synth_play_note" id="29"><value name="pitch"><block type="math_number" id="30"><field name="NUM">800</field></block></value><value name="duration"><block type="math_number" id="31"><field name="NUM">0.25</field></block></value><next><block type="synth_play_note" id="32"><value name="pitch"><block type="math_number" id="33"><field name="NUM">600</field></block></value><value name="duration"><block type="math_number" id="34"><field name="NUM">0.25</field></block></value><next><block type="synth_play_note" id="41"><value name="pitch"><block type="math_number" id="42"><field name="NUM">400</field></block></value><value name="duration"><block type="math_number" id="43"><field name="NUM">0.25</field></block></value><next><block type="synth_play_note" id="38"><value name="pitch"><block type="math_number" id="39"><field name="NUM">500</field></block></value><value name="duration"><block type="math_number" id="40"><field name="NUM">0.25</field></block></value></block></next></block></next></block></next></block></statement><next><block type="synth_play_note" id="69"><value name="pitch"><block type="math_number" id="70"><field name="NUM">200</field></block></value><value name="duration"><block type="math_number" id="71"><field name="NUM">0.5</field></block></value></block></next></block></xml>
+    <block type="controls_repeat_ext" id="75" x="148" y="34"><value name="TIMES"><block type="math_number" id="76"><field name="NUM">2</field></block></value><statement name="DO"><block type="synth_play_note" id="77"><value name="pitch"><block type="math_number" id="78"><field name="NUM">48</field></block></value><value name="duration"><block type="math_number" id="79"><field name="NUM">4</field></block></value><next><block type="synth_play_note" id="80"><value name="pitch"><block type="math_number" id="81"><field name="NUM">50</field></block></value><value name="duration"><block type="math_number" id="82"><field name="NUM">4</field></block></value><next><block type="synth_play_note" id="83"><value name="pitch"><block type="math_number" id="84"><field name="NUM">52</field></block></value><value name="duration"><block type="math_number" id="85"><field name="NUM">4</field></block></value><next><block type="synth_play_note" id="86"><value name="pitch"><block type="math_number" id="87"><field name="NUM">55</field></block></value><value name="duration"><block type="math_number" id="88"><field name="NUM">4</field></block></value></block></next></block></next></block></next></block></statement><next><block type="synth_play_note" id="89"><value name="pitch"><block type="math_number" id="90"><field name="NUM">60</field></block></value><value name="duration"><block type="math_number" id="91"><field name="NUM">4</field></block></value></block></next></block><block type="controls_repeat_ext" id="92" x="508" y="28"><value name="TIMES"><block type="math_number" id="93"><field name="NUM">4</field></block></value><statement name="DO"><block type="synth_play_note" id="94"><value name="pitch"><block type="math_number" id="95"><field name="NUM">72</field></block></value><value name="duration"><block type="math_number" id="96"><field name="NUM">2</field></block></value><next><block type="synth_play_note" id="97"><value name="pitch"><block type="math_number" id="98"><field name="NUM">76</field></block></value><value name="duration"><block type="math_number" id="99"><field name="NUM">2</field></block></value><next><block type="synth_play_note" id="100"><value name="pitch"><block type="math_number" id="101"><field name="NUM">79</field></block></value><value name="duration"><block type="math_number" id="102"><field name="NUM">2</field></block></value><next><block type="synth_play_note" id="103"><value name="pitch"><block type="math_number" id="104"><field name="NUM">83</field></block></value><value name="duration"><block type="math_number" id="105"><field name="NUM">2</field></block></value></block></next></block></next></block></next></block></statement><next><block type="synth_play_note" id="106"><value name="pitch"><block type="math_number" id="107"><field name="NUM">84</field></block></value><value name="duration"><block type="math_number" id="108"><field name="NUM">4</field></block></value></block></next></block>
   </xml>
+
+  <xml id="drumsDemo" style="display: none">
+    <block type="synth_rest" id="77" x="140" y="10"><value name="duration"><block type="math_number" id="78"><field name="NUM">2</field></block></value><next><block type="controls_repeat_ext" id="43"><value name="TIMES"><block type="math_number" id="44"><field name="NUM">8</field></block></value><statement name="DO"><block type="synth_play_drum" id="28"><field name="NAME">HIHAT</field><value name="duration"><block type="math_number" id="29"><field name="NUM">0.25</field></block></value></block></statement></block></next></block><block type="controls_repeat_ext" id="45" x="142" y="178"><value name="TIMES"><block type="math_number" id="46"><field name="NUM">4</field></block></value><statement name="DO"><block type="synth_play_drum" id="47"><field name="NAME">KICK</field><value name="duration"><block type="math_number" id="48"><field name="NUM">0.5</field></block></value><next><block type="synth_play_drum" id="63"><field name="NAME">SNARE</field><value name="duration"><block type="math_number" id="64"><field name="NUM">0.5</field></block></value></block></next></block></statement></block>
+  </xml>
+
+  <xml id="comboDemo" style="display: none">
+    <block type="controls_repeat_ext" id="1" x="131" y="8"><value name="TIMES"><block type="math_number" id="2"><field name="NUM">8</field></block></value><statement name="DO"><block type="synth_play_drum" id="5"><field name="NAME">KICK</field><value name="duration"><block type="math_number" id="6"><field name="NUM">1</field></block></value><next><block type="synth_play_drum" id="46"><field name="NAME">KICK</field><value name="duration"><block type="math_number" id="47"><field name="NUM">1</field></block></value><next><block type="synth_rest" id="7"><value name="duration"><block type="math_number" id="8"><field name="NUM">2</field></block></value><next><block type="synth_play_drum" id="9"><field name="NAME">SNARE</field><value name="duration"><block type="math_number" id="10"><field name="NUM">1</field></block></value><next><block type="synth_rest" id="11"><value name="duration"><block type="math_number" id="12"><field name="NUM">1</field></block></value><next><block type="synth_play_drum" id="13"><field name="NAME">KICK</field><value name="duration"><block type="math_number" id="14"><field name="NUM">2</field></block></value></block></next></block></next></block></next></block></next></block></next></block></statement><next><block type="synth_play_drum" id="66"><field name="NAME">KICK</field><value name="duration"><block type="math_number" id="67"><field name="NUM">2</field></block></value></block></next></block><block type="controls_repeat_ext" id="15" x="456" y="8"><value name="TIMES"><block type="math_number" id="16"><field name="NUM">2</field></block></value><statement name="DO"><block type="synth_rest" id="17"><value name="duration"><block type="math_number" id="18"><field name="NUM">16</field></block></value><next><block type="controls_repeat_ext" id="19"><value name="TIMES"><block type="math_number" id="20"><field name="NUM">8</field></block></value><statement name="DO"><block type="synth_play_drum" id="21"><field name="NAME">HIHAT</field><value name="duration"><block type="math_number" id="22"><field name="NUM">0.5</field></block></value></block></statement><next><block type="controls_repeat_ext" id="48"><value name="TIMES"><block type="math_number" id="49"><field name="NUM">12</field></block></value><statement name="DO"><block type="synth_play_drum" id="50"><field name="NAME">HIHAT</field><value name="duration"><block type="math_number" id="51"><field name="NUM">1</field></block></value></block></statement></block></next></block></next></block></statement></block><block type="synth_rest" id="64" x="143" y="343"><value name="duration"><block type="math_number" id="65"><field name="NUM">32</field></block></value><next><block type="controls_repeat_ext" id="35"><value name="TIMES"><block type="math_number" id="36"><field name="NUM">2</field></block></value><statement name="DO"><block type="synth_play_note" id="37"><value name="pitch"><block type="math_number" id="38"><field name="NUM">48</field></block></value><value name="duration"><block type="math_number" id="39"><field name="NUM">8</field></block></value><next><block type="synth_play_note" id="40"><value name="pitch"><block type="math_number" id="41"><field name="NUM">60</field></block></value><value name="duration"><block type="math_number" id="42"><field name="NUM">4</field></block></value><next><block type="synth_play_note" id="43"><value name="pitch"><block type="math_number" id="44"><field name="NUM">51</field></block></value><value name="duration"><block type="math_number" id="45"><field name="NUM">4</field></block></value></block></next></block></next></block></statement></block></next></block><block type="synth_rest" id="62" x="467" y="345"><value name="duration"><block type="math_number" id="63"><field name="NUM">32</field></block></value><next><block type="controls_repeat_ext" id="23"><value name="TIMES"><block type="math_number" id="24"><field name="NUM">2</field></block></value><statement name="DO"><block type="synth_rest" id="25"><value name="duration"><block type="math_number" id="26"><field name="NUM">12</field></block></value><next><block type="controls_repeat_ext" id="27"><value name="TIMES"><block type="math_number" id="28"><field name="NUM">2</field></block></value><statement name="DO"><block type="synth_play_note" id="29"><value name="pitch"><block type="math_number" id="30"><field name="NUM">67</field></block></value><value name="duration"><block type="math_number" id="31"><field name="NUM">1</field></block></value><next><block type="synth_play_note" id="32"><value name="pitch"><block type="math_number" id="33"><field name="NUM">63</field></block></value><value name="duration"><block type="math_number" id="34"><field name="NUM">1</field></block></value></block></next></block></statement></block></next></block></statement></block></next></block>
+</xml>
+
+<xml id="doubleUpDrumsDemo" style="display: none">
+  <block type="synth_play_note" id="1" x="122" y="19"><value name="pitch"><block type="math_number" id="2"><field name="NUM">72</field></block></value><value name="duration"><block type="math_number" id="3"><field name="NUM">3</field></block></value><next><block type="synth_play_note" id="4"><value name="pitch"><block type="math_number" id="5"><field name="NUM">67</field></block></value><value name="duration"><block type="math_number" id="6"><field name="NUM">3</field></block></value><next><block type="synth_play_note" id="7"><value name="pitch"><block type="math_number" id="8"><field name="NUM">63</field></block></value><value name="duration"><block type="math_number" id="9"><field name="NUM">3</field></block></value><next><block type="synth_play_note" id="10"><value name="pitch"><block type="math_number" id="11"><field name="NUM">62</field></block></value><value name="duration"><block type="math_number" id="12"><field name="NUM">3</field></block></value><next><block type="controls_repeat_ext" id="13"><value name="TIMES"><block type="math_number" id="14"><field name="NUM">4</field></block></value><statement name="DO"><block type="synth_play_note" id="15"><value name="pitch"><block type="math_number" id="16"><field name="NUM">48</field></block></value><value name="duration"><block type="math_number" id="17"><field name="NUM">6</field></block></value><next><block type="controls_repeat_ext" id="18"><value name="TIMES"><block type="math_number" id="19"><field name="NUM">3</field></block></value><statement name="DO"><block type="synth_play_note" id="20"><value name="pitch"><block type="math_number" id="21"><field name="NUM">60</field></block></value><value name="duration"><block type="math_number" id="22"><field name="NUM">2</field></block></value></block></statement></block></next></block></statement><next><block type="synth_play_note" id="23"><value name="pitch"><block type="math_number" id="24"><field name="NUM">48</field></block></value><value name="duration"><block type="math_number" id="25"><field name="NUM">6</field></block></value></block></next></block></next></block></next></block></next></block></next></block><block type="variables_set" id="26" x="499" y="19"><field name="VAR">counter</field><value name="VALUE"><block type="math_number" id="27"><field name="NUM">1</field></block></value><next><block type="controls_repeat_ext" id="28"><value name="TIMES"><block type="math_number" id="29"><field name="NUM">4</field></block></value><statement name="DO"><block type="controls_repeat_ext" id="30"><value name="TIMES"><block type="variables_get" id="31"><field name="VAR">counter</field></block></value><statement name="DO"><block type="synth_play_drum" id="32"><field name="NAME">SNARE</field><value name="duration"><block type="math_arithmetic" id="33"><field name="OP">DIVIDE</field><value name="A"><block type="math_number" id="34"><field name="NUM">3</field></block></value><value name="B"><block type="variables_get" id="35"><field name="VAR">counter</field></block></value></block></value></block></statement><next><block type="variables_set" id="36"><field name="VAR">counter</field><value name="VALUE"><block type="math_arithmetic" id="37"><field name="OP">MULTIPLY</field><value name="A"><block type="variables_get" id="38"><field name="VAR">counter</field></block></value><value name="B"><block type="math_number" id="39"><field name="NUM">2</field></block></value></block></value></block></next></block></statement><next><block type="controls_repeat_ext" id="40"><value name="TIMES"><block type="math_number" id="41"><field name="NUM">8</field></block></value><statement name="DO"><block type="synth_play_drum" id="42"><field name="NAME">KICK</field><value name="duration"><block type="math_number" id="43"><field name="NUM">6</field></block></value></block></statement></block></next></block></next></block><block type="synth_rest" id="44" x="491" y="355"><value name="duration"><block type="math_number" id="45"><field name="NUM">12</field></block></value><next><block type="controls_repeat_ext" id="46"><value name="TIMES"><block type="math_number" id="47"><field name="NUM">4</field></block></value><statement name="DO"><block type="controls_repeat_ext" id="50"><value name="TIMES"><block type="math_number" id="51"><field name="NUM">4</field></block></value><statement name="DO"><block type="synth_play_drum" id="52"><field name="NAME">SNARE</field><value name="duration"><block type="math_number" id="53"><field name="NUM">3</field></block></value></block></statement></block></statement></block></next></block>
+</xml>
 
   <xml id="toolbox" style="display: none">
     <category name="Sound">
+
       <block type="synth_play_note">
         <value name="pitch">
+          <block type="math_number">
+            <field name="NUM">60</field>
+          </block>
+        </value>
+        <value name="duration">
+          <block type="math_number">
+            <field name="NUM">1</field>
+          </block>
+        </value>
+      </block>
+
+      <block type="synth_play_freq">
+        <value name="freq">
           <block type="math_number">
             <field name="NUM">200</field>
           </block>
         </value>
         <value name="duration">
           <block type="math_number">
+            <field name="NUM">1</field>
+          </block>
+        </value>
+      </block>
+
+      <block type="synth_rest">
+        <value name="duration">
+          <block type="math_number">
+            <field name="NUM">1</field>
+          </block>
+        </value>
+      </block>
+
+      <block type="synth_play_drum">
+        <value name="duration">
+          <block type="math_number">
             <field name="NUM">0.5</field>
           </block>
         </value>
       </block>
-      <block type="synth_voice"></block>
+
     </category>
     <category name="Logic">
       <block type="controls_if"></block>
@@ -84,60 +127,85 @@
       <block type="logic_negate"></block>
       <block type="logic_boolean"></block>
     </category>
+
     <category name="Loops">
       <block type="controls_repeat_ext">
         <value name="TIMES">
           <block type="math_number">
-            <field name="NUM">10</field>
+            <field name="NUM">4</field>
           </block>
         </value>
       </block>
       <block type="controls_whileUntil"></block>
     </category>
+
     <category name="Math">
       <block type="math_number"></block>
       <block type="math_arithmetic"></block>
       <block type="math_single"></block>
     </category>
-    <category name="Text">
-      <block type="text"></block>
-      <block type="text_length"></block>
-      <block type="text_print"></block>
-      <block type="text_prompt_ext">
-        <value name="TEXT">
-          <block type="text"></block>
-        </value>
-      </block>
-    </category>
+
     <category name="Variables" custom="VARIABLE"></category>
     <category name="Functions" custom="PROCEDURE"></category>
   </xml>
 
   <script>
 
-    // TONE SETUP
-    // var synth = new Tone.PolySynth(16, Tone.MonoSynth).toMaster();
-    // synth.triggerAttackRelease([200,300,500], 0.5); // test sound
+    // SYNTH SETUP
+    // Tone PolySynth does not use voice-stealing, so if we try to play more
+    // notes at a time than we have voices, no new notes will play
+    // longer release times sound nice but exacerbate this problem
+    var tone = new Tone();
 
-  /*
-  var synth = new Tone.PolySynth(16, Tone.MonoSynth).toMaster();
-  synth.set({
-    oscillator:{
-      type: "sine"
-    },
-    envelope:{
-      attack: 0.05
-    }
-  });
-*/
-
+    // Lead synth sound
     var synth = new Tone.PolySynth(64, Tone.SimpleSynth).toMaster();
     synth.set({
       oscillator: {
         type:'pwm',
         modulationFrequency: 1
+      },
+      envelope:{
+        release: 0.5
       }
     });
+    
+    // Organ synth sound
+    // var organ = new Tone.PolySynth(64, Tone.SimpleFM).toMaster();
+    // organ.set({
+    //   "modulationIndex" : 12.22,
+    //   envelope: {
+    //     release: 0.5
+    //   }
+    // });
+
+    // Snare drum
+    var snare = new Tone.NoiseSynth().toMaster();
+
+    // Kick drum
+    var kick = new Tone.DrumSynth({
+      "envelope" : {
+        "sustain" : 0,
+        "attack" : 0.02,
+        "decay" : 0.8
+      },
+      "octaves" : 10
+    }).toMaster();
+
+    // hi-hat
+    var hihat = new Tone.NoiseSynth().toMaster();
+    hihat.set({
+        noise: {
+          type: 'white'
+        },
+        filter:{
+          type:'lowpass'
+        },
+        filterEnvelope:{
+          min:2000,
+          max:0
+        }
+    });
+    
 
     // BLOCKLY SETUP
     var workspace = Blockly.inject('blocklyDiv',
@@ -155,19 +223,46 @@
       Blockly.Xml.domToWorkspace(workspace, document.getElementById(name));
     }
 
-
     var myInterpreter = null;
 
     function initApi(interpreter, scope) {
 
-      // playNote
+      // playFreq
       var wrapper = function(freq, duration, blockId) {
         freq = (Number(freq) > 0) ? Number(freq) : 200;
         duration = (Number(duration) > 0) ? Number(duration) : 0.5;
         blockId = blockId ? Number(blockId) : '0';
-        return interpreter.createPrimitive(playNote(freq, duration, blockId));
+        return interpreter.createPrimitive(playFreq(freq, duration, blockId));
+      };
+      interpreter.setProperty(scope, 'playFreq',
+          interpreter.createNativeFunction(wrapper));
+
+      // playNote
+      var wrapper = function(pitch, duration, blockId) {
+        pitch = (Number(pitch) > 0) ? Number(pitch) : 60;
+        duration = (Number(duration) > 0) ? Number(duration) : 0.5;
+        blockId = blockId ? Number(blockId) : '0';
+        return interpreter.createPrimitive(playNote(pitch, duration, blockId));
       };
       interpreter.setProperty(scope, 'playNote',
+          interpreter.createNativeFunction(wrapper));
+
+      // rest
+      var wrapper = function(duration, blockId) {
+        duration = (Number(duration) > 0) ? Number(duration) : 1;
+        blockId = blockId ? Number(blockId) : '0';
+        return interpreter.createPrimitive(rest(duration, blockId));
+      };
+      interpreter.setProperty(scope, 'rest',
+          interpreter.createNativeFunction(wrapper));
+
+      // playDrum
+      var wrapper = function(name, duration, blockId) {
+        duration = (Number(duration) > 0) ? Number(duration) : 1;
+        blockId = blockId ? Number(blockId) : '0';
+        return interpreter.createPrimitive(playDrum(name, duration, blockId));
+      };
+      interpreter.setProperty(scope, 'playDrum',
           interpreter.createNativeFunction(wrapper));
 
       // setTime - used internally
@@ -193,40 +288,106 @@
     // block highlighting is scheduled with timeouts, not as precise but good enough
 
     var nextTime;
-    var noteEvents = [];
-    var secondsPerBeat = 0.5;
+    var synthEvents = [];
+    var secondsPerTick = 0.1;
       
-    function playNote(freq, duration, blockId) {
+    function playFreq(freq, duration, blockId) {
       var time = nextTime;
+      duration *= secondsPerTick;
       nextTime += duration;
-      var newNoteEvent = {
+      var newEvent = {
+        type: 'note',
         freq: freq,
         duration: duration,
         time: time,
         blockId: blockId
       };
-      noteEvents.push(newNoteEvent);
+      synthEvents.push(newEvent);
+    }
+
+    function playNote(pitch, duration, blockId) {
+      var freq = midiToFreq(pitch);
+      playFreq(freq, duration, blockId);
+    }
+
+    function rest(duration, blockId) {
+      var time = nextTime;
+      duration *= secondsPerTick;
+      nextTime += duration;
+     var newEvent = {
+        type: 'rest',
+        duration: duration,
+        time: time,
+        blockId: blockId
+      };
+      synthEvents.push(newEvent); 
+    } 
+
+    function playDrum(name, duration, blockId) {
+      var time = nextTime;
+      duration *= secondsPerTick;
+      nextTime += duration;
+      var newEvent = {
+        type: 'drum',
+        name: name,
+        duration: duration,
+        time: time,
+        blockId: blockId
+      }
+      synthEvents.push(newEvent);
+    }
+
+    function midiToFreq(noteNum) {
+      var noteName = tone.midiToNote(noteNum);
+      return tone.noteToFrequency(noteName);
     }
 
     function setTime(time) {
       nextTime = time;
     }
 
-    function scheduleNotes() {
-      for (var i=0; i<noteEvents.length; i++) {
-        var freq = noteEvents[i].freq;
-        var time = noteEvents[i].time;
-        var duration = noteEvents[i].duration;
-        var blockId = noteEvents[i].blockId;
+    function scheduleSynthEvents() {
+      for (var i=0; i<synthEvents.length; i++) {
+        var time = synthEvents[i].time;
+        var duration = synthEvents[i].duration;
+        var blockId = synthEvents[i].blockId;
 
-        synth.triggerAttackRelease(freq, duration, '+' + time);
         highlightBlock(blockId, time, time + duration);
+
+        switch (synthEvents[i].type) {
+          case 'note':
+            var freq = synthEvents[i].freq;
+            synth.triggerAttackRelease(freq, duration, '+' + time);
+            break;
+          case 'rest':
+            // nothing to do
+            break;
+          case 'drum':
+            var name = synthEvents[i].name;
+            scheduleDrum(name, time);
+            break;
+        }
       }
     }
 
+    function scheduleDrum(name, time) {
+      if (name == 'SNARE') {
+        snare.triggerAttackRelease(0.25, '+' + time);
+      }
+      if (name == 'KICK') {
+        kick.triggerAttackRelease('C2', 0.25, '+' + time);
+      }
+      if (name == 'HIHAT') {
+        var velocity = (Math.random() * 0.75) + 0.25;
+        hihat.triggerAttackRelease(0.1, '+' + time);
+      }
+    }
+
+    // highlight using color changes, instead of built-in outline highlight
+    // so we can highlight multiple blocks at a time
     function highlightBlock(id, timeOn, timeOff) {
       window.setTimeout(function() {
-        workspace.getBlockById(id).setColour(180);
+        workspace.getBlockById(id).setColour(300);
       }, timeOn*1000);
       window.setTimeout(function() {
         workspace.getBlockById(id).setColour(Blockly.Blocks.synth.HUE);
@@ -255,7 +416,7 @@
 
     function runCode() {
       
-      noteEvents = [];
+      synthEvents = [];
       nextTime = 0;
 
       workspace.traceOn(true);
@@ -266,9 +427,14 @@
       myInterpreter = new Interpreter(code, initApi);
       myInterpreter.run(); // generate the schedule
 
-      scheduleNotes();
+      scheduleSynthEvents();
     }
 
+    function logXML() {
+      var xml = Blockly.Xml.workspaceToDom(workspace);
+      var xml_text = Blockly.Xml.domToText(xml);
+      console.log(xml_text);
+    }
 
   </script>
 

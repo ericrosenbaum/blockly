@@ -1,5 +1,26 @@
 Blockly.Blocks.synth = {};
-Blockly.Blocks.synth.HUE = 290;
+Blockly.Blocks.synth.HUE = 190;
+
+Blockly.Blocks['synth_play_freq'] = {
+  init: function() {
+    this.appendValueInput("freq")
+        .setCheck("Number")
+        .appendField("play frequency");
+    this.appendDummyInput()
+        .appendField("Hz");
+    this.appendValueInput("duration")
+        .setCheck("Number")
+        .appendField("for");
+    this.appendDummyInput()
+        .appendField("ticks");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setColour(Blockly.Blocks.synth.HUE);
+    this.setTooltip('');
+    this.setHelpUrl('');
+  }
+};
 
 Blockly.Blocks['synth_play_note'] = {
   init: function() {
@@ -10,7 +31,7 @@ Blockly.Blocks['synth_play_note'] = {
         .setCheck("Number")
         .appendField("for");
     this.appendDummyInput()
-        .appendField("beats");
+        .appendField("ticks");
     this.setInputsInline(true);
     this.setPreviousStatement(true);
     this.setNextStatement(true);
@@ -20,6 +41,42 @@ Blockly.Blocks['synth_play_note'] = {
   }
 };
 
+Blockly.Blocks['synth_rest'] = {
+  init: function() {
+    this.appendValueInput("duration")
+        .setCheck("Number")
+        .appendField("rest for");
+    this.appendDummyInput()
+        .appendField("ticks");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setColour(Blockly.Blocks.synth.HUE);
+    this.setTooltip('');
+    this.setHelpUrl('');
+  }
+};
+
+Blockly.Blocks['synth_play_drum'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("play drum")
+        .appendField(new Blockly.FieldDropdown([["snare", "SNARE"], ["kick", "KICK"], ["hi-hat", "HIHAT"]]), "NAME");
+    this.appendValueInput("duration")
+        .setCheck("Number")
+        .appendField("for");
+    this.appendDummyInput()
+        .appendField("ticks");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setColour(Blockly.Blocks.synth.HUE);
+    this.setTooltip('');
+    this.setHelpUrl('');
+  }
+};
+
+/*
 Blockly.Blocks['synth_voice'] = {
   init: function() {
     this.appendStatementInput("VOICE")
@@ -30,6 +87,7 @@ Blockly.Blocks['synth_voice'] = {
     this.setHelpUrl('http://www.example.com/');
   }
 };
+*/
 
 /*
 Blockly.Blocks['synth_every_bar'] = {
