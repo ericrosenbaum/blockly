@@ -47,6 +47,33 @@ Blockly.JavaScript['synth_play_drum'] = function(block) {
   
   return code;
 };
+
+Blockly.JavaScript['synth_set_instrument'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  dropdown_name = dropdown_name ? dropdown_name : 'null';
+  
+  // var code = 'setInstrument(\'' + dropdown_name + '\', ' + block.id + ');\n';
+  
+  var code = 'setInstrument(\'' + dropdown_name + '\');\n';
+
+  return code;
+};
+
+/*
+Blockly.JavaScript['math_random'] = function(block) {
+
+	var value_min = Blockly.JavaScript.valueToCode(block, 'MIN', Blockly.JavaScript.ORDER_ATOMIC);
+	var value_max = Blockly.JavaScript.valueToCode(block, 'MAX', Blockly.JavaScript.ORDER_ATOMIC);
+
+	value_min = value_min ? value_min : 'null';
+	value_max = value_max ? value_max : 'null';
+
+	code = 'pickRandom(' + value_min + ', ' + value_max + ')';
+
+	return code;
+}
+*/
+
 /*
 Blockly.JavaScript['synth_voice'] = function(block) {
   var statements_voice = Blockly.JavaScript.statementToCode(block, 'VOICE');

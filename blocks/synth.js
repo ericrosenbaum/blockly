@@ -61,7 +61,7 @@ Blockly.Blocks['synth_play_drum'] = {
   init: function() {
     this.appendDummyInput()
         .appendField("play drum")
-        .appendField(new Blockly.FieldDropdown([["snare", "SNARE"], ["kick", "KICK"], ["hi-hat", "HIHAT"]]), "NAME");
+        .appendField(new Blockly.FieldDropdown([["snare", "SNARE"], ["kick", "KICK"], ["hi-hat", "HIHAT"], ["scratch", "SCRATCH"]]), "NAME");
     this.appendValueInput("duration")
         .setCheck("Number")
         .appendField("for");
@@ -75,6 +75,38 @@ Blockly.Blocks['synth_play_drum'] = {
     this.setHelpUrl('');
   }
 };
+
+Blockly.Blocks['synth_set_instrument'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("set instrument")
+        .appendField(new Blockly.FieldDropdown([["organ", "ORGAN"], ["synth", "SYNTH"]]), "NAME");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setColour(Blockly.Blocks.synth.HUE);
+    this.setTooltip('');
+    this.setHelpUrl('');
+  }
+};
+
+/*
+Blockly.Blocks['math_random'] = {
+  init: function() {
+    this.appendValueInput("MIN")
+        .setCheck("Number")
+        .appendField("pick random");
+    this.appendValueInput("MAX")
+        .setCheck("Number")
+        .appendField("to");
+    this.setOutput(true, 'Number');
+    this.setInputsInline(true);
+    this.setColour(Blockly.Blocks.math.HUE);
+    this.setTooltip('');
+    this.setHelpUrl('');
+  }
+};
+*/
 
 /*
 Blockly.Blocks['synth_voice'] = {
