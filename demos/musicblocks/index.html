@@ -443,11 +443,6 @@
       }
     }
 
-    // function pickRandom(min, max) {
-    //   var range = Math.abs(max - min);
-    //   return (Math.random() * range) + min; 
-    // }
-
     function scheduleSynthEvents() {
 
       instrument = defaultInstrument;
@@ -464,7 +459,6 @@
             highlightBlock(blockId, time, time + duration);
             break;
           case 'rest':
-            // nothing to do
             highlightBlock(blockId, time, time + duration);
             break;
           case 'drum':
