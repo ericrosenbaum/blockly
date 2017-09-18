@@ -24,6 +24,10 @@
  */
 'use strict';
 
+/**
+ * @name Blockly.ContextMenu
+ * @namespace
+ */
 goog.provide('Blockly.ContextMenu');
 
 goog.require('goog.dom');
@@ -40,6 +44,13 @@ goog.require('goog.ui.MenuItem');
 Blockly.ContextMenu.currentBlock = null;
 
 /**
+ * Opaque data that can be passed to unbindEvent_.
+ * @type {Array.<!Array>}
+ * @private
+ */
+Blockly.ContextMenu.eventWrapper_ = null;
+
+/**
  * Construct the menu based on the list of options and show the menu.
  * @param {!Event} e Mouse event.
  * @param {!Array.<!Object>} options Array of menu options.
@@ -51,35 +62,70 @@ Blockly.ContextMenu.show = function(e, options, rtl) {
     Blockly.ContextMenu.hide();
     return;
   }
+  var menu = Blockly.ContextMenu.populate_(options, rtl);
+
+  goog.events.listen(menu, goog.ui.Component.EventType.ACTION,
+                     Blockly.ContextMenu.hide);
+
+  Blockly.ContextMenu.position_(menu, e, rtl);
+  // 1ms delay is required for focusing on context menus because some other
+  // mouse event is still waiting in the queue and clears focus.
+  setTimeout(function() {menu.getElement().focus();}, 1);
+  Blockly.ContextMenu.currentBlock = null;  // May be set by Blockly.Block.
+};
+
+/**
+ * Create the context menu object and populate it with the given options.
+ * @param {!Array.<!Object>} options Array of menu options.
+ * @param {boolean} rtl True if RTL, false if LTR.
+ * @return {!goog.ui.Menu} The menu that will be shown on right click.
+ * @private
+ */
+Blockly.ContextMenu.populate_ = function(options, rtl) {
   /* Here's what one option object looks like:
     {text: 'Make It So',
      enabled: true,
      callback: Blockly.MakeItSo}
   */
   var menu = new goog.ui.Menu();
+  menu.setAllowAutoFocus(true);
   menu.setRightToLeft(rtl);
-  for (var x = 0, option; option = options[x]; x++) {
+  for (var i = 0, option; option = options[i]; i++) {
     var menuItem = new goog.ui.MenuItem(option.text);
     menuItem.setRightToLeft(rtl);
     menu.addChild(menuItem, true);
     menuItem.setEnabled(option.enabled);
     if (option.enabled) {
-      var evtHandlerCapturer = function(callback) {
-        return function() { Blockly.doCommand(callback); };
-      };
       goog.events.listen(menuItem, goog.ui.Component.EventType.ACTION,
-                         evtHandlerCapturer(option.callback));
+                         option.callback);
+      menuItem.handleContextMenu = function(/* e */) {
+        // Right-clicking on menu option should count as a click.
+        goog.events.dispatchEvent(this, goog.ui.Component.EventType.ACTION);
+      };
     }
   }
-  goog.events.listen(menu, goog.ui.Component.EventType.ACTION,
-                     Blockly.ContextMenu.hide);
-  // Record windowSize and scrollOffset before adding menu.
+  return menu;
+};
+
+/**
+ * Add the menu to the page and position it correctly.
+ * @param {!goog.ui.Menu} menu The menu to add and position.
+ * @param {!Event} e Mouse event for the right click that is making the context
+ *     menu appear.
+ * @param {boolean} rtl True if RTL, false if LTR.
+ * @private
+ */
+Blockly.ContextMenu.position_ = function(menu, e, rtl) {
+    // Record windowSize and scrollOffset before adding menu.
   var windowSize = goog.dom.getViewportSize();
   var scrollOffset = goog.style.getViewportPageOffset(document);
   var div = Blockly.WidgetDiv.DIV;
   menu.render(div);
   var menuDom = menu.getElement();
-  Blockly.addClass_(menuDom, 'blocklyContextMenu');
+  Blockly.utils.addClass(menuDom, 'blocklyContextMenu');
+  // Prevent system context menu when right-clicking a Blockly context menu.
+  Blockly.bindEventWithChecks_(menuDom, 'contextmenu', null,
+                               Blockly.utils.noEvent);
   // Record menuSize after adding menu.
   var menuSize = goog.style.getSize(menuDom);
 
@@ -101,12 +147,6 @@ Blockly.ContextMenu.show = function(e, options, rtl) {
     }
   }
   Blockly.WidgetDiv.position(x, y, windowSize, scrollOffset, rtl);
-
-  menu.setAllowAutoFocus(true);
-  // 1ms delay is required for focusing on context menus because some other
-  // mouse event is still waiting in the queue and clears focus.
-  setTimeout(function() {menuDom.focus();}, 1);
-  Blockly.ContextMenu.currentBlock = null;  // May be set by Blockly.Block.
 };
 
 /**
@@ -115,6 +155,9 @@ Blockly.ContextMenu.show = function(e, options, rtl) {
 Blockly.ContextMenu.hide = function() {
   Blockly.WidgetDiv.hideIfOwner(Blockly.ContextMenu);
   Blockly.ContextMenu.currentBlock = null;
+  if (Blockly.ContextMenu.eventWrapper_) {
+    Blockly.unbindEvent_(Blockly.ContextMenu.eventWrapper_);
+  }
 };
 
 /**
@@ -126,16 +169,24 @@ Blockly.ContextMenu.hide = function() {
  */
 Blockly.ContextMenu.callbackFactory = function(block, xml) {
   return function() {
-    var newBlock = Blockly.Xml.domToBlock(block.workspace, xml);
-    // Move the new block next to the old block.
-    var xy = block.getRelativeToSurfaceXY();
-    if (block.RTL) {
-      xy.x -= Blockly.SNAP_RADIUS;
-    } else {
-      xy.x += Blockly.SNAP_RADIUS;
+    Blockly.Events.disable();
+    try {
+      var newBlock = Blockly.Xml.domToBlock(xml, block.workspace);
+      // Move the new block next to the old block.
+      var xy = block.getRelativeToSurfaceXY();
+      if (block.RTL) {
+        xy.x -= Blockly.SNAP_RADIUS;
+      } else {
+        xy.x += Blockly.SNAP_RADIUS;
+      }
+      xy.y += Blockly.SNAP_RADIUS * 2;
+      newBlock.moveBy(xy.x, xy.y);
+    } finally {
+      Blockly.Events.enable();
     }
-    xy.y += Blockly.SNAP_RADIUS * 2;
-    newBlock.moveBy(xy.x, xy.y);
+    if (Blockly.Events.isEnabled() && !newBlock.isShadow()) {
+      Blockly.Events.fire(new Blockly.Events.BlockCreate(newBlock));
+    }
     newBlock.select();
   };
 };

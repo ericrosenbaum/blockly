@@ -42,6 +42,7 @@ Code.LANGUAGE_NAME = {
   'el': 'Ελληνικά',
   'en': 'English',
   'es': 'Español',
+  'et': 'Eesti',
   'fa': 'فارسی',
   'fr': 'Français',
   'he': 'עברית',
@@ -66,19 +67,20 @@ Code.LANGUAGE_NAME = {
   'sk': 'Slovenčina',
   'sr': 'Српски',
   'sv': 'Svenska',
+  'ta': 'தமிழ்',
   'th': 'ภาษาไทย',
   'tlh': 'tlhIngan Hol',
   'tr': 'Türkçe',
   'uk': 'Українська',
   'vi': 'Tiếng Việt',
-  'zh-hans': '簡體中文',
+  'zh-hans': '简体中文',
   'zh-hant': '正體中文'
 };
 
 /**
  * List of RTL languages.
  */
-Code.LANGUAGE_RTL = ['ar', 'fa', 'he'];
+Code.LANGUAGE_RTL = ['ar', 'fa', 'he', 'lki'];
 
 /**
  * Blockly's main workspace.
@@ -138,11 +140,11 @@ Code.loadBlocks = function(defaultXml) {
     // Language switching stores the blocks during the reload.
     delete window.sessionStorage.loadOnceBlocks;
     var xml = Blockly.Xml.textToDom(loadOnce);
-    Blockly.Xml.domToWorkspace(Code.workspace, xml);
+    Blockly.Xml.domToWorkspace(xml, Code.workspace);
   } else if (defaultXml) {
     // Load the editor with default starting blocks.
     var xml = Blockly.Xml.textToDom(defaultXml);
-    Blockly.Xml.domToWorkspace(Code.workspace, xml);
+    Blockly.Xml.domToWorkspace(xml, Code.workspace);
   } else if ('BlocklyStorage' in window) {
     // Restore saved blocks in a separate thread so that subsequent
     // initialization is not affected from a failed load.
@@ -198,14 +200,8 @@ Code.bindClick = function(el, func) {
  * Load the Prettify CSS and JavaScript.
  */
 Code.importPrettify = function() {
-  //<link rel="stylesheet" href="../prettify.css">
-  //<script src="../prettify.js"></script>
-  var link = document.createElement('link');
-  link.setAttribute('rel', 'stylesheet');
-  link.setAttribute('href', '../prettify.css');
-  document.head.appendChild(link);
   var script = document.createElement('script');
-  script.setAttribute('src', '../prettify.js');
+  script.setAttribute('src', 'https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js');
   document.head.appendChild(script);
 };
 
@@ -243,7 +239,7 @@ Code.LANG = Code.getLang();
  * List of tab names.
  * @private
  */
-Code.TABS_ = ['blocks', 'javascript', 'php', 'python', 'dart', 'xml'];
+Code.TABS_ = ['blocks', 'javascript', 'php', 'python', 'dart', 'lua', 'xml'];
 
 Code.selected = 'blocks';
 
@@ -269,7 +265,7 @@ Code.tabClick = function(clickedName) {
     }
     if (xmlDom) {
       Code.workspace.clear();
-      Blockly.Xml.domToWorkspace(Code.workspace, xmlDom);
+      Blockly.Xml.domToWorkspace(xmlDom, Code.workspace);
     }
   }
 
@@ -293,7 +289,7 @@ Code.tabClick = function(clickedName) {
   if (clickedName == 'blocks') {
     Code.workspace.setVisible(true);
   }
-  Blockly.fireUiEvent(window, 'resize');
+  Blockly.svgResize(Code.workspace);
 };
 
 /**
@@ -311,33 +307,41 @@ Code.renderContent = function() {
   } else if (content.id == 'content_javascript') {
     var code = Blockly.JavaScript.workspaceToCode(Code.workspace);
     content.textContent = code;
-    if (typeof prettyPrintOne == 'function') {
-      code = content.innerHTML;
-      code = prettyPrintOne(code, 'js');
+    if (typeof PR.prettyPrintOne == 'function') {
+      code = content.textContent;
+      code = PR.prettyPrintOne(code, 'js');
       content.innerHTML = code;
     }
   } else if (content.id == 'content_python') {
     code = Blockly.Python.workspaceToCode(Code.workspace);
     content.textContent = code;
-    if (typeof prettyPrintOne == 'function') {
-      code = content.innerHTML;
-      code = prettyPrintOne(code, 'py');
+    if (typeof PR.prettyPrintOne == 'function') {
+      code = content.textContent;
+      code = PR.prettyPrintOne(code, 'py');
       content.innerHTML = code;
     }
   } else if (content.id == 'content_php') {
     code = Blockly.PHP.workspaceToCode(Code.workspace);
     content.textContent = code;
-    if (typeof prettyPrintOne == 'function') {
-      code = content.innerHTML;
-      code = prettyPrintOne(code, 'php');
+    if (typeof PR.prettyPrintOne == 'function') {
+      code = content.textContent;
+      code = PR.prettyPrintOne(code, 'php');
       content.innerHTML = code;
     }
   } else if (content.id == 'content_dart') {
     code = Blockly.Dart.workspaceToCode(Code.workspace);
     content.textContent = code;
-    if (typeof prettyPrintOne == 'function') {
-      code = content.innerHTML;
-      code = prettyPrintOne(code, 'dart');
+    if (typeof PR.prettyPrintOne == 'function') {
+      code = content.textContent;
+      code = PR.prettyPrintOne(code, 'dart');
+      content.innerHTML = code;
+    }
+  } else if (content.id == 'content_lua') {
+    code = Blockly.Lua.workspaceToCode(Code.workspace);
+    content.textContent = code;
+    if (typeof PR.prettyPrintOne == 'function') {
+      code = content.textContent;
+      code = PR.prettyPrintOne(code, 'lua');
       content.innerHTML = code;
     }
   }
@@ -365,7 +369,7 @@ Code.init = function() {
       el.style.width = (2 * bBox.width - el.offsetWidth) + 'px';
     }
     // Make the 'Blocks' tab line up with the toolbox.
-    if (Code.workspace.toolbox_.width) {
+    if (Code.workspace && Code.workspace.toolbox_.width) {
       document.getElementById('tab_blocks').style.minWidth =
           (Code.workspace.toolbox_.width - 38) + 'px';
           // Account for the 19 pixel margin and on each side.
@@ -373,7 +377,24 @@ Code.init = function() {
   };
   window.addEventListener('resize', onresize, false);
 
-  var toolbox = document.getElementById('toolbox');
+  // The toolbox XML specifies each category name using Blockly's messaging
+  // format (eg. `<category name="%{BKY_CATLOGIC}">`).
+  // These message keys need to be defined in `Blockly.Msg` in order to
+  // be decoded by the library. Therefore, we'll use the `MSG` dictionary that's
+  // been defined for each language to import each category name message
+  // into `Blockly.Msg`.
+  // TODO: Clean up the message files so this is done explicitly instead of
+  // through this for-loop.
+  for (var messageKey in MSG) {
+    if (goog.string.startsWith(messageKey, 'cat')) {
+      Blockly.Msg[messageKey.toUpperCase()] = MSG[messageKey];
+    }
+  }
+
+  // Construct the toolbox XML.
+  var toolboxText = document.getElementById('toolbox').outerHTML;
+  var toolboxXml = Blockly.Xml.textToDom(toolboxText);
+
   Code.workspace = Blockly.inject('content_blocks',
       {grid:
           {spacing: 25,
@@ -382,11 +403,13 @@ Code.init = function() {
            snap: true},
        media: '../../media/',
        rtl: rtl,
-       toolbox: toolbox,
-       zoom: {enabled: true}
+       toolbox: toolboxXml,
+       zoom:
+           {controls: true,
+            wheel: true}
       });
 
-  // Add to reserved word list: Local variables in execution evironment (runJS)
+  // Add to reserved word list: Local variables in execution environment (runJS)
   // and the infinite loop detection function.
   Blockly.JavaScript.addReservedWords('code,timeouts,checkTimeout');
 
@@ -398,7 +421,6 @@ Code.init = function() {
   }
 
   Code.tabClick(Code.selected);
-  Blockly.fireUiEvent(window, 'resize');
 
   Code.bindClick('trashButton',
       function() {Code.discard(); Code.renderContent();});
@@ -421,8 +443,9 @@ Code.init = function() {
     Code.bindClick('tab_' + name,
         function(name_) {return function() {Code.tabClick(name_);};}(name));
   }
-
   onresize();
+  Blockly.svgResize(Code.workspace);
+
   // Lazy-load the syntax-highlighting.
   window.setTimeout(Code.importPrettify, 1);
 };
@@ -470,20 +493,6 @@ Code.initLanguage = function() {
   document.getElementById('linkButton').title = MSG['linkTooltip'];
   document.getElementById('runButton').title = MSG['runTooltip'];
   document.getElementById('trashButton').title = MSG['trashTooltip'];
-
-  var categories = ['catLogic', 'catLoops', 'catMath', 'catText', 'catLists',
-                    'catColour', 'catVariables', 'catFunctions'];
-  for (var i = 0, cat; cat = categories[i]; i++) {
-    document.getElementById(cat).setAttribute('name', MSG[cat]);
-  }
-  var textVars = document.getElementsByClassName('textVar');
-  for (var i = 0, textVar; textVar = textVars[i]; i++) {
-    textVar.textContent = MSG['textVariable'];
-  }
-  var listVars = document.getElementsByClassName('listVar');
-  for (var i = 0, listVar; listVar = listVars[i]; i++) {
-    listVar.textContent = MSG['listVariable'];
-  }
 };
 
 /**
@@ -513,9 +522,11 @@ Code.runJS = function() {
 Code.discard = function() {
   var count = Code.workspace.getAllBlocks().length;
   if (count < 2 ||
-      window.confirm(MSG['discard'].replace('%1', count))) {
+      window.confirm(Blockly.Msg.DELETE_ALL_BLOCKS.replace('%1', count))) {
     Code.workspace.clear();
-    window.location.hash = '';
+    if (window.location.hash) {
+      window.location.hash = '';
+    }
   }
 };
 
